@@ -32,12 +32,18 @@ bool verificarGanador(char tablero[3][3], char jugador) {
     return false;
 }
 
+
+
+
 // Función principal
 int main() {
-    char tablero[3][3] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+    char tablero[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
     int turnos = 0;
     char jugadorActual = 'X';
 
+
+
+    // Juego principal
     while (turnos < 9) {
         imprimirTablero(tablero);
         int movimiento;
