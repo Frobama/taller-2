@@ -1,79 +1,98 @@
+#include "Tablero.h"
+#include "Cpu.h"
 #include <iostream>
 using namespace std;
 
-// Función para imprimir el tablero
-void imprimirTablero(char tablero[3][3]) {
-    cout << "Tablero actual:\n";
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-            cout << tablero[i][j];
-            if (j < 2) cout << " | ";
-        }
-        cout << "\n";
-        if (i < 2) cout << "--|---|--\n";
-    }
-    cout << endl;
-}
-
-// Función para verificar si hay un ganador
-bool verificarGanador(char tablero[3][3], char jugador) {
-    // Comprobar filas y columnas
-    for (int i = 0; i < 3; i++) {
-        if ((tablero[i][0] == jugador && tablero[i][1] == jugador && tablero[i][2] == jugador) || 
-            (tablero[0][i] == jugador && tablero[1][i] == jugador && tablero[2][i] == jugador)) {
-            return true;
-        }
-    }
-    // Comprobar diagonales
-    if ((tablero[0][0] == jugador && tablero[1][1] == jugador && tablero[2][2] == jugador) || 
-        (tablero[0][2] == jugador && tablero[1][1] == jugador && tablero[2][0] == jugador)) {
-        return true;
-    }
-    return false;
-}
-
-
-
-
 // Función principal
 int main() {
-    char tablero[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
+    Tablero tablero = Tablero();
+    Cpu cpu = Cpu();
     int turnos = 0;
     char jugadorActual = 'X';
+    cout << "1 jugador (contra la IA)" << endl << "2 jugadores"<< endl;
+    cout << "Cantidad de jugadores: " << endl;
+    int cantJugadores;
+    cin >> cantJugadores;
+    while(cantJugadores != 1 && cantJugadores != 2){
+        cout << "Cantidad de jugadores: " << endl;
+        cin >> cantJugadores;
+    } 
 
-
+    int movimiento;
+    int fila;
+    int columna;
 
     // Juego principal
     while (turnos < 9) {
-        imprimirTablero(tablero);
-        int movimiento;
-        cout << "Turno del jugador " << jugadorActual << ". Ingresa el número de la celda: ";
-        cin >> movimiento;
+        tablero.imprimirTablero();
 
-        // Convertir el número ingresado a coordenadas de la matriz
-        int fila = (movimiento - 1) / 3;
-        int columna = (movimiento - 1) % 3;
+        if(cantJugadores == 1){
+            //Turno del jugado
+            if(jugadorActual == 'X'){
+                cout << "Es tu turno. Ingresa el número de la celda: ";
+                cin >> movimiento;
+                fila = (movimiento - 1) / 3;
+                columna = (movimiento - 1) % 3;
 
-        // Verificar si la celda está disponible
-        if (tablero[fila][columna] != 'X' && tablero[fila][columna] != 'O') {
-            tablero[fila][columna] = jugadorActual;
-            turnos++;
+                // Verificar si la celda está disponible
+                if (tablero.valido(fila,columna)) {
+                    tablero.hacerJugada(jugadorActual,fila,columna);
+                    turnos++;
 
-            // Verificar si el jugador actual ganó
-            if (verificarGanador(tablero, jugadorActual)) {
-                imprimirTablero(tablero);
-                cout << "¡Jugador " << jugadorActual << " ha ganado!\n";
-                return 0;
+                    // Verificar si el jugador actual ganó
+                    if (tablero.verificarGanador(jugadorActual)) {
+                        tablero.imprimirTablero();
+                        cout << "¡Has ganado!" << endl;
+                        return 0;
+                    }
+
+                    // Cambiar al otro jugador
+                    jugadorActual = (jugadorActual == 'X') ? 'O' : 'X';
+                } else {
+                    cout << "Celda ocupada. Intenta de nuevo.\n";
+                }
+            //Turno de la IA
+            } else{
+                cout << "Es el turno de la IA" << endl;
+
+                auto [fila,columna] = cpu.mejorJugada(tablero);
+                tablero.hacerJugada('O',fila,columna);
+                
+                // Verificar si la IA ganó
+                if (tablero.verificarGanador('O')) {
+                    tablero.imprimirTablero();
+                    cout << "¡La IA ha ganado!\n";
+                    return 0;
+                }
+                turnos++;
+                jugadorActual = (jugadorActual == 'X') ? 'O' : 'X';
+
             }
-
-            // Cambiar al otro jugador
-            jugadorActual = (jugadorActual == 'X') ? 'O' : 'X';
-        } else {
-            cout << "Celda ocupada. Intenta de nuevo.\n";
         }
+        
+        else{
+            cout << "Turno del jugador " << jugadorActual << ". Ingresa el número de la celda: ";
+            cin >> movimiento;
+
+            // Convertir el número ingresado a coordenadas de la matriz
+            fila = (movimiento - 1) / 3;
+            columna = (movimiento - 1) % 3;
+
+            // Verificar si la celda está disponible
+            if (tablero.valido(fila,columna)) {
+                tablero.hacerJugada(jugadorActual,fila,columna);
+                turnos++;
+
+                // Cambiar al otro jugador
+                jugadorActual = (jugadorActual == 'X') ? 'O' : 'X';
+            } else {
+                cout << "Celda ocupada. Intenta de nuevo.\n";
+            }
+        }
+        
     }
 
-    imprimirTablero(tablero);
+    tablero.imprimirTablero();
     cout << "¡Es un empate!\n";
     return 0;
 }

@@ -1,13 +1,15 @@
-#include "main.cpp"
+#pragma once
+#include "Tablero.h"
+#include <vector>
 
-class cpu{
+class Cpu{
 
     private:
     
     char tablero[3][3];
-    char matrizRecorrido;
-    void preconstruct(int turnos,char jugadorActual);
+    int evaluar(Tablero tablero);
+    int minimax(Tablero tablero, int profundidad, bool esMax);
 
     public:
-    cpu(char tablero[3][3]);
+    std::pair<int,int> mejorJugada(Tablero tablero);
 };

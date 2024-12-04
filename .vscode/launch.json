@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run C++ Program",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/main.exe", // Ruta al ejecutable principal
+            "args": [], // Argumentos opcionales para tu programa
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}", // Carpeta de trabajo
+            "environment": [],
+            "externalConsole": true, // Abre una consola externa para ejecutar
+            "MIMode": "gdb", // Usa el depurador GDB
+            "miDebuggerPath": "C:\\msys64\\ucrt64\\bin\\gdb.exe", // Ruta al archivo gdb.exe
+            "setupCommands": [
+                {
+                    "description": "Habilitar impresión de valores para GDB",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
