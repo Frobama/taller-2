@@ -62,6 +62,7 @@ int main() {
                 if (tablero.verificarGanador('O')) {
                     tablero.imprimirTablero();
                     cout << "¡La IA ha ganado!\n";
+                    cout<<cpu.getExplored()<<endl;
                     return 0;
                 }
                 turnos++;
@@ -94,5 +95,6 @@ int main() {
 
     tablero.imprimirTablero();
     cout << "¡Es un empate!\n";
+    cout<<"Nodos Explorados: "<<cpu.getExplored()<<endl;
     return 0;
 }
