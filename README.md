@@ -1,3 +1,6 @@
+Integrantes:
+Benjamin Pedro Rojas Espejo, 21.742.522-0, benjamin.rojas06@alumnos.ucn.cl, C1 
+Benjamin Ignacio Torres Inostroza, 21.695.589-7, benjamin.torres04@alumnos.ucn.cl, C1
 Instrucciones de Ejecución
 Comando: g++ -o main main.cpp Tablero.cpp Cpu.cpp
 Se recomienda usar un IDE com Visual Studio Code. Asegurese de tener configurado correctamente los archivos tasks.json y launch.json (deberían estar ya configurados). Si llega a tener errores usando un IDE, ejecute directamente el archivo main.exe.
