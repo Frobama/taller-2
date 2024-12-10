@@ -9,6 +9,8 @@ int main() {
     Cpu cpu = Cpu();
     int turnos = 0;
     char jugadorActual = 'X';
+    cout << "Bienvenido al juego de Tres en Linea" << endl << "Para ganar, tienes que lograr tener 3 de tus símbolos en una linea, ya sea" << endl << "horizontal, vertical, o diagonalmente."<< endl;
+    cout << "Para escoger la casilla, sólo ingresa su número correspondiente"<<endl;
     cout << "1 jugador (contra la IA)" << endl << "2 jugadores"<< endl;
     cout << "Cantidad de jugadores: " << endl;
     int cantJugadores;
